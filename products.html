@@ -5,7 +5,7 @@
     <title>Coursework-project</title>
     <script type="text/javascript" src="vue.js"> </script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <div id="app" class="container">
@@ -27,10 +27,10 @@
             <div class="List">
                 <div v-for="course in courses" class="product">
                     <!-- <img src="/Images/math-regular-24.png"> -->
-                    <h3>Math</h3>
-                    <p>Location: <span></span></p>
-                    <p>Price: <span></span></p>
-                    <p>Spaces: <span></span></p>
+                    <h3> {{course.subject}} </h3>
+                    <p>Location: <span> {{course.location}} </span></p>
+                    <p>Price: <span> {{course.price}} </span></p>
+                    <p>Spaces: <span> {{course.space}} </span></p>
                     <button type="button" class="add-to-cart" @click="addTocart" >Add to Cart</button>
                 </div>
             </div>
@@ -43,23 +43,6 @@
 
     </div>
     
-    <script type="text/javascript">
-        new Vue({
-            el:'#app',
-            data:{
-                courses: Array.from( {length: 20}, (x, i) => i),
-                cart:[]
-            },
-            methods:{
-                addTocart(param) {
-                    this.cart.push(param);
-                    alert('Added to Cart');
-                },
-                checkOut(cart) {
-                    console.log()
-                }
-            }
-        })
-    </script>
+    <script src="assets/js/app.js "></script>
 </body>
 </html>
