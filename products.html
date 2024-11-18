@@ -24,13 +24,42 @@
 
         <section class="products container">
             <h2 class="section-title"> List of Lessons</h2>
-
-            <div class="products-content">
-                
+            <div class="List">
+                <div v-for="course in courses" class="product">
+                    <!-- <img src="/Images/math-regular-24.png"> -->
+                    <h3>Math</h3>
+                    <p>Location: <span></span></p>
+                    <p>Price: <span></span></p>
+                    <p>Spaces: <span></span></p>
+                    <button type="button" class="add-to-cart" @click="addTocart" >Add to Cart</button>
+                </div>
             </div>
+            <button type="button" @click="checkOut(cart)" class="add-to-cart">Checkout</button>
         </section>
+
+        <footer>
+            <p> © 2024 Lessons, All rights reserved</p>
+        </footer>
 
     </div>
     
+    <script type="text/javascript">
+        new Vue({
+            el:'#app',
+            data:{
+                courses: Array.from( {length: 20}, (x, i) => i),
+                cart:[]
+            },
+            methods:{
+                addTocart(param) {
+                    this.cart.push(param);
+                    alert('Added to Cart');
+                },
+                checkOut(cart) {
+                    console.log()
+                }
+            }
+        })
+    </script>
 </body>
 </html>

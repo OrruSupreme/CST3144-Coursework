@@ -18,9 +18,9 @@
 
 }
 
-img{
+/* img{
     width: 100%;
-}
+} */
 
 
 
@@ -62,4 +62,44 @@ section{
 
 .products{
     margin-top: 2rem;
+}
+
+.list{
+    display: flex ;
+    flex-wrap: wrap;
+    
+
+}
+
+.add-to-cart{
+    background-color: #3949ab;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.product{
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px;
+    width: 30%;
+    background-color: #bcc2ee;
+    border-radius: 10px;
+}
+
+.product h3{
+    color: #3949ab;
+}
+
+footer{
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: var(--bg-color);
+    box-shadow: 0 1px 4px hsla(232, 75%, 61%, 0.15);
 }
