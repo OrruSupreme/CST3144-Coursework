@@ -25,16 +25,18 @@
         <section class="products container">
             <h2 class="section-title"> List of Lessons</h2>
             <div class="List">
-                <div v-for="course in courses" class="product">
-                    <!-- <img src="/Images/math-regular-24.png"> -->
+                <div v-for="course in courses" :key="course.id" class="product">
+                    <img :src= "course.img">
                     <h3> {{course.subject}} </h3>
                     <p>Location: <span> {{course.location}} </span></p>
                     <p>Price: <span> {{course.price}} </span></p>
-                    <p>Spaces: <span> {{course.space}} </span></p>
-                    <button type="button" class="add-to-cart" @click="addTocart" >Add to Cart</button>
+                    <p>Space: <span> {{course.space}} </span></p>
+                    <button v-bind:disabled="course.space === 0" type="button" class="add-to-cart" @click="addTocart(course)" >Add to Cart</button>
                 </div>
             </div>
             <button type="button" @click="checkOut(cart)" class="add-to-cart">Checkout</button>
+
+            
         </section>
 
         <footer>
