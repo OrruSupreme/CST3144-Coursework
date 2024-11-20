@@ -31,7 +31,14 @@
                     <p>Location: <span> {{course.location}} </span></p>
                     <p>Price: <span> {{course.price}} </span></p>
                     <p>Space: <span> {{course.space}} </span></p>
-                    <button v-bind:class="{'disabled': course.space === 0}" type="button" class="add-to-cart" @click="addTocart(course)" >Add to Cart</button>
+                    <button 
+                        v-bind:class="{'disabled': course.space === 0}" 
+                        type="button" 
+                        class="add-to-cart" 
+                        v-on:click="addToCart(course)" 
+                    >
+                        Add to Cart
+                    </button>
                 </div>
             </div>
             <button type="button" @click="checkOut(cart)" class="add-to-cart">Checkout</button>

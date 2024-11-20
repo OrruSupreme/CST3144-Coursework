@@ -24,6 +24,7 @@ new Vue({
         if (storedCart) {
             this.cart = JSON.parse(storedCart);
         }
+        this.updateCourseSpace();
     },
     computed:{
         totalPrice () {
@@ -31,18 +32,45 @@ new Vue({
         }
     },
     methods:{
-        addTocart(param) {
-            this.cart.push(param);
-            localStorage.setItem('cart', JSON.stringify(this.cart)); 
-            alert('Added to Cart');
+        addToCart(param) {
+            if (param.space > 0) {
+                param.space -= 1;
+                const inCart = this.cart.find(item => item.id === param.id);
+                if (inCart) {
+                    inCart.quantity += 1;
+                } else {
+                    this.cart.push({ ...param, quantity: 1 });
+                }
+                localStorage.setItem('cart', JSON.stringify(this.cart));
+                alert(" added to cart!");
+            }
         },
         checkout(param) {
             window.location= 'checkout.html';
             console.log(cart)
         },
         removeItemFromCart(param) {
-            this.cart= this.cart.filter (item => item.id !== param.id);
-            localStorage.setItem('cart', JSON.stringify(this.cart))
+            const inCart = this.cart.find(item => item.id === param.id);
+            if (inCart) {
+                inCart.quantity = inCart.quantity - 1;
+
+                var originalCourse = this.courses.find(c => c.id === param.id);
+                originalCourse += 1;
+
+                if (inCart.quantity === 0) {
+                    this.cart = this.cart.filter(item => item.id !== param.id);
+                }
+                localStorage.setItem('cart', JSON.stringify(this.cart));
+            }
+        },
+
+        updateCourseSpace() {
+            this.cart.forEach(cartItem => {
+                const course = this.courses.find(c => c.id === cartItem.id)
+                if (course) {
+                    course.space -= cartItem.quantity;
+                }
+            });
         },
        
         validateName() {

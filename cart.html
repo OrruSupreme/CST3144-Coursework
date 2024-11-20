@@ -37,8 +37,8 @@
                   
                    <p>Location: <span> {{course.location}} </span></p>
                    <p>Price: <span> $ {{course.price}} </span></p>
-                   <p>Space: <span> {{course.space}} </span></p>
-                    <button type="button" class="add-to-cart" @click="removeItemFromCart(course)">Remove</button>
+                   <p>Spaces Booked: <span> {{course.quantity}} </span></p>
+                    <button type="button" class="add-to-cart" v-on:click="removeItemFromCart(course)">Remove</button>
                 </div>
             </div>
             
