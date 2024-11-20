@@ -14,6 +14,8 @@ new Vue({
             {id: 10, subject: "Cyber Security", location: "London", price: 80, space: 5},
         ],
         cart:[],
+        sortKey: 'subject',
+        sortOrder: 'asc',
         name_:'',
         phone:'',
         validName: false,
@@ -27,8 +29,33 @@ new Vue({
         this.updateCourseSpace();
     },
     computed:{
+        sortedCourses() {
+            console.log(this.courses)
+            let sorted = [...this.courses];
+
+            sorted.sort((a, b) => {
+                let modifier = 1;
+
+                if (this.sortOrder === 'desc') {
+                    modifier = -1;
+                }
+
+                if (this.sortKey === 'price' || this.sortKey === 'space') {
+                    return (a[this.sortKey] - b[this.sortKey]) * modifier;
+                } else {
+                    let aValue = a[this.sortKey];
+                    let bValue = b[this.sortKey];
+                    if (aValue) aValue = aValue.toLowerCase();
+                    if (bValue) bValue = bValue.toLowerCase();
+                    if (aValue < bValue) return -1 * modifier;
+                    if (aValue > bValue) return 1 * modifier;
+                    return 0;
+                }
+            });
+            return sorted;
+        },
         totalPrice () {
-            return this.cart.reduce((sum, item) => sum +item.price, 0);
+            return this.cart.reduce((sum, item) => sum +(item.price * item.quantity), 0);
         }
     },
     methods:{
