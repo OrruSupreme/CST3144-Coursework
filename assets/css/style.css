@@ -50,6 +50,11 @@ header{
     width: 100%;
 }
 
+.disabled{
+    background-color: rgb(133, 133, 144) !important;
+    pointer-events: none;
+}
+
 section{
     padding: 4rem 0 3rem;
 }
@@ -102,4 +107,8 @@ footer{
     width: 100%;
     background: var(--bg-color);
     box-shadow: 0 1px 4px hsla(232, 75%, 61%, 0.15);
+}
+.total{
+    display: flex;
+    justify-content: space-between;
 }

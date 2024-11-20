@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coursework-project</title>
+    <title>Cart</title>
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="assets/css/style.css">
@@ -28,7 +28,9 @@
             <div v-if="cart.length === 0">
                 <h2 class="section-title"> Your Cart is Empty</h2>
             </div>
+            
             <div v-else>
+                <h2 class="section-title"> Your Cart </h2>
                 <div v-for="course in cart" :key="course.id" class="product">
                    <!-- <img src="/Images/math-regular-24.png"> -->
                    <h3> {{course.subject}} </h3>
@@ -39,8 +41,9 @@
                     <button type="button" class="add-to-cart" @click="removeItemFromCart(course)">Remove</button>
                 </div>
             </div>
-            <button type="button" class="add-to-cart" @click="removeItemFromCart(course)">Checkout</button>
+            
             <div class="total">
+                <button type="button" v-bind:class="{'disabled': cart.length === 0}" class="add-to-cart" @click="checkout(cart)">Checkout</button>
                 Total: 
                 ${{totalPrice}}
             </div> 

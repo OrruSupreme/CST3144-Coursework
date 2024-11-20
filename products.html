@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coursework-project</title>
+    <title>Lessons</title>
     <script type="text/javascript" src="vue.js"> </script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="assets/css/style.css">
@@ -31,7 +31,7 @@
                     <p>Location: <span> {{course.location}} </span></p>
                     <p>Price: <span> {{course.price}} </span></p>
                     <p>Space: <span> {{course.space}} </span></p>
-                    <button v-bind:disabled="course.space === 0" type="button" class="add-to-cart" @click="addTocart(course)" >Add to Cart</button>
+                    <button v-bind:class="{'disabled': course.space === 0}" type="button" class="add-to-cart" @click="addTocart(course)" >Add to Cart</button>
                 </div>
             </div>
             <button type="button" @click="checkOut(cart)" class="add-to-cart">Checkout</button>

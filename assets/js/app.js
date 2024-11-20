@@ -32,8 +32,9 @@ new Vue({
             localStorage.setItem('cart', JSON.stringify(this.cart)); 
             alert('Added to Cart');
         },
-        checkOut(cart) {
-            console.log()
+        checkout(param) {
+            window.location= 'checkout.html';
+            console.log(cart)
         },
         removeItemFromCart(param) {
             this.cart= this.cart.filter (item => item.id !== param.id);
