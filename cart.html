@@ -32,7 +32,7 @@
             <div v-else>
                 <h2 class="section-title"> Your Cart </h2>
                 <div v-for="course in cart" :key="course.id" class="product">
-                   <!-- <img src="/Images/math-regular-24.png"> -->
+                    <img :src= "course.img">
                    <h3> {{course.subject}} </h3>
                   
                    <p>Location: <span> {{course.location}} </span></p>

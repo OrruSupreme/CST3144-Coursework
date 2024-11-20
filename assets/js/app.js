@@ -2,8 +2,8 @@ new Vue({
     el:'#app',
     data:{
         courses: [
-            {id: 1, subject: "Biology", location: "London", price: 80, space: 0, img:'/Images/math-regular-24.png'},
-            {id: 2, subject: "Math 101", location: "Atlanta", price: 200, space: 5},
+            {id: 1, subject: "Biology", location: "London", price: 80, space: 0, },
+            {id: 2, subject: "Math 101", location: "Atlanta", price: 200, space: 5,img:'/Images/math-regular-24.png'},
             {id: 3, subject: "English", location: "Utah", price: 300, space: 5},
             {id: 4, subject: "Physics", location: "California", price: 450, space: 5},
             {id: 5, subject: "French", location: "Los Angeles", price: 55, space: 5},
@@ -13,7 +13,11 @@ new Vue({
             {id: 9, subject: "Computer Studies", location: "Mauritius", price: 200, space: 5},
             {id: 10, subject: "Cyber Security", location: "London", price: 80, space: 5},
         ],
-        cart:[]
+        cart:[],
+        name_:'',
+        phone:'',
+        validName: false,
+        validPhone: false
     },
     created() {
         const storedCart = localStorage.getItem('cart');
@@ -39,7 +43,23 @@ new Vue({
         removeItemFromCart(param) {
             this.cart= this.cart.filter (item => item.id !== param.id);
             localStorage.setItem('cart', JSON.stringify(this.cart))
-        }
+        },
+       
+        validateName() {
+            const nameRegx = /^[a-zA-Z\s]+$/;
+            this.validName = nameRegx.test(this.name)
+        },
+        validatePhone() {
+            const phoneRegx = /^[0-9]+$/;
+            this.validPhone = phoneRegx.test(this.phone)
+        },
+        completeOrder () {
+            alert(`Order completed for ${name_.value}`)
+            // this.cart=[];
+            console.log(name_, phone.value);
+
+        },
+
     }
 })
 

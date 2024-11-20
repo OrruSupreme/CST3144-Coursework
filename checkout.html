@@ -27,6 +27,48 @@
         <section>
             <h2 class="section-title"> Checkout</h2>
 
+            <div v-if="cart.length === 0">
+                <h2 class="viewcourse"> Please view our courses</h2>
+            </div>
+
+            <div v-else>
+                <h2>Order Summary</h2>
+                <div v-for="course in cart" :key="course.id" class="product">
+                    <img :src= "course.img">
+                   <h3> {{course.subject}} </h3>
+                   <p>Location: <span> {{course.location}} </span></p>
+                   <p>Price: <span> $ {{course.price}} </span></p>
+                   <p>Space: <span> {{course.space}} </span></p>
+                </div>
+                <br>
+                <form @submit.prevent="completeOrder">
+                    <input 
+                        type="text" 
+                        name="name_" 
+                        id="name_" 
+                        v-model="name_" 
+                        placeholder="Name" 
+                        @input="validateName"
+                        :class="{invalid: !validName && name_}"
+                    />
+                    <input 
+                        type="tel" 
+                        name="phone" 
+                        id="phone" 
+                        v-model="phone" 
+                        placeholder="Phone Number" 
+                        @input="validatePhone"
+                        :class="{invalid: !validPhone && phone}"
+                    />
+                    <button 
+                        type="submit" 
+                        class="add-to-cart" 
+                        :class="{disabled: !validName || !validPhone}"
+                    >Checkout</button>
+                </form>
+                
+            </div>
+
         </section>
         <footer>
             <p> © 2024 Lessons, All rights reserved</p>

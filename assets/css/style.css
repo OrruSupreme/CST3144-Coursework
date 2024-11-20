@@ -112,3 +112,9 @@ footer{
     display: flex;
     justify-content: space-between;
 }
+
+.viewcourse{
+    text-align: center;
+    font-weight: 300;
+    font-size: medium;
+}
