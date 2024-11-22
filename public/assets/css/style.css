@@ -118,3 +118,26 @@ footer{
     font-weight: 300;
     font-size: medium;
 }
+
+#search-form{
+    display: flex;
+    align-items: center;
+}
+#search-form button{
+    background-color: #3949ab;
+    padding: 10px;
+    border: 1px solid #3949ab;
+    border-radius:  0 5px 5px 0;
+    color: white;
+}
+#search-form button:hover{
+    background-color: #28337f;
+}
+#search-form input{
+/* background-color: #3949ab; */
+padding: 7px;
+width: 300px;
+border: 1px solid #3949ab;
+border-radius:  5px 0  0 5px;
+color: #3949ab;
+}
