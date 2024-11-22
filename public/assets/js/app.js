@@ -1,25 +1,15 @@
 new Vue({
-    el:'#app',
-    data:{
-        courses: [
-            {id: 1, subject: "Biology", location: "London", price: 80, space: 0, },
-            {id: 2, subject: "Math 101", location: "Atlanta", price: 200, space: 5,img:'/Images/math-regular-24.png'},
-            {id: 3, subject: "English", location: "Utah", price: 300, space: 5},
-            {id: 4, subject: "Physics", location: "California", price: 450, space: 5},
-            {id: 5, subject: "French", location: "Los Angeles", price: 55, space: 5},
-            {id: 6, subject: "Chemistry", location: "Las Vegas", price: 100, space: 5},
-            {id: 7, subject: "Agriculture", location: "Houston", price: 120, space: 5},
-            {id: 8, subject: "Finance", location: "New York", price: 180, space: 5},
-            {id: 9, subject: "Computer Studies", location: "Mauritius", price: 200, space: 5},
-            {id: 10, subject: "Cyber Security", location: "London", price: 80, space: 5},
-        ],
-        cart:[],
+    el: '#app',
+    data: {
+        courses: [],
+        cart: [],
         sortKey: 'subject',
         sortOrder: 'asc',
-        name_:'',
-        phone:'',
+        name_: '',
+        phone: '',
         validName: false,
-        validPhone: false
+        validPhone: false,
+        search_term: ''
     },
     created() {
         const storedCart = localStorage.getItem('cart');
@@ -28,7 +18,7 @@ new Vue({
         }
         this.updateCourseSpace();
     },
-    computed:{
+    computed: {
         sortedCourses() {
             console.log(this.courses)
             let sorted = [...this.courses];
@@ -54,11 +44,11 @@ new Vue({
             });
             return sorted;
         },
-        totalPrice () {
-            return this.cart.reduce((sum, item) => sum +(item.price * item.quantity), 0);
+        totalPrice() {
+            return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
         }
     },
-    methods:{
+    methods: {
         addToCart(param) {
             if (param.space > 0) {
                 param.space -= 1;
@@ -73,7 +63,7 @@ new Vue({
             }
         },
         checkout(param) {
-            window.location= 'checkout.html';
+            window.location = 'checkout.html';
             console.log(cart)
         },
         removeItemFromCart(param) {
@@ -99,7 +89,7 @@ new Vue({
                 }
             });
         },
-       
+
         validateName() {
             const nameRegx = /^[a-zA-Z\s]+$/;
             this.validName = nameRegx.test(this.name)
@@ -108,13 +98,28 @@ new Vue({
             const phoneRegx = /^[0-9]+$/;
             this.validPhone = phoneRegx.test(this.phone)
         },
-        completeOrder () {
+        completeOrder() {
             alert(`Order completed for ${name_.value}`)
             // this.cart=[];
             console.log(name_, phone.value);
 
         },
+        search() {
+            if (this.search_term.length > 0 && this.search_term.trim()!== '' ) {
+                fetch(`/search?search_term=${this.search_term}`)
+                .then(res => res.json())
+                .then((data) => this.courses = data)
+                .catch(err => { console.log(err) })
+            }
+            
+        }
 
+    },
+    mounted() {
+        fetch('/courses')
+            .then(res => res.json())
+            .then((data) => this.courses = data)
+            .catch(err => { console.log(err) })
     }
 })
 

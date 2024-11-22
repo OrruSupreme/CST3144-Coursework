@@ -18,10 +18,10 @@
                 </div>
                 
                 <div class="">
-                    <form action="" method="get" id="search-form">
-                        <input type="text">
-                        <button><i class='bx bx-search'></i></button>
-                    </form>
+                    <div id="search-form">
+                        <input type="text" @input="search" v-model="search_term">
+                       
+                    </div>
                 </div>
 
                 <div class="">
@@ -77,6 +77,6 @@
 
     </div>
     
-    <script src="assets/js/app.js "></script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
