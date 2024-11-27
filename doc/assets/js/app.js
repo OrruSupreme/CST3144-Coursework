@@ -12,7 +12,7 @@ new Vue({
         search_term: ''
     },
     created() {
-        const storedCart = localStorage.getItem('cart');
+        const storedCart = localStorage.getItem('cart') || [];
         if (storedCart) {
             this.cart = JSON.parse(storedCart);
         }
@@ -20,7 +20,7 @@ new Vue({
     },
     computed: {
         sortedCourses() {
-            console.log(this.courses)
+            // console.log(this.courses)
             let sorted = [...this.courses];
 
             sorted.sort((a, b) => {
@@ -42,7 +42,10 @@ new Vue({
                     return 0;
                 }
             });
-            return sorted;
+            
+        return sorted;
+
+           
         },
         totalPrice() {
             return this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
@@ -61,10 +64,35 @@ new Vue({
                 localStorage.setItem('cart', JSON.stringify(this.cart));
                 alert(" added to cart!");
             }
+            
         },
-        checkout(param) {
-            window.location = 'checkout.html';
-            console.log(cart)
+        checkout() {
+            let payload = JSON.stringify({
+                name: this.name_,
+                phone: this.phone,
+                items: this.cart.map((item) => {
+                    return {
+                        id: item.id,
+                        quantity: item.quantity
+                    }
+                })
+            })
+            console.log(payload)
+
+            fetch('/order/', {
+                method: 'post', headers: {
+                    'Content-Type': 'application/json',
+                }, body: payload
+            })
+                .then(res => res.json())
+                .then((data) => {
+                   this.cart=[]
+                   localStorage.setItem('cart', JSON.stringify(this.cart));
+                    return data
+
+
+                })
+                .catch(err => { console.log(err) })
         },
         removeItemFromCart(param) {
             const inCart = this.cart.find(item => item.id === param.id);
@@ -89,6 +117,10 @@ new Vue({
                 }
             });
         },
+        collectContactInfoOnCheckout(param) {
+            window.location = 'checkout.html';
+
+        },
 
         validateName() {
             const nameRegx = /^[a-zA-Z\s]+$/;
@@ -101,7 +133,7 @@ new Vue({
         completeOrder() {
             alert(`Order completed for ${name_.value}`)
             // this.cart=[];
-            console.log(name_, phone.value);
+            // console.log(name_, phone.value);
 
         },
         search() {
@@ -118,8 +150,21 @@ new Vue({
     mounted() {
         fetch('/courses')
             .then(res => res.json())
-            .then((data) => this.courses = data)
+            .then((data) => 
+                {
+                    // this.courses = data
+                    this.courses = data.map((course) =>{
+                        if (this.cart) {
+                            let courseItem= this.cart.find((item)=> item.id===course.id);
+                            if (courseItem) {
+                                course.space -= courseItem.quantity;
+                            }
+                            
+                        } 
+                        return course;
+                    })
+                    return response;
+                })
             .catch(err => { console.log(err) })
     }
 })
-

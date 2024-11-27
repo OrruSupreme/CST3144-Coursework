@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout</title>
+    <title>Cart</title>
     <script src="https://unpkg.com/vue@2.7.8/dist/vue.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="assets/css/style.css">
@@ -25,50 +25,28 @@
         </header>
 
         <section>
-            <h2 class="section-title"> Checkout</h2>
-
             <div v-if="cart.length === 0">
-                <h2 class="viewcourse"> Please view our courses</h2>
+                <h2 class="section-title"> Your Cart is Empty</h2>
             </div>
-
+            
             <div v-else>
-                <h2>Order Summary</h2>
+                <h2 class="section-title"> Your Cart </h2>
                 <div v-for="course in cart" :key="course.id" class="product">
                     <img :src= "course.img">
                    <h3> {{course.subject}} </h3>
+                  
                    <p>Location: <span> {{course.location}} </span></p>
                    <p>Price: <span> $ {{course.price}} </span></p>
                    <p>Spaces Booked: <span> {{course.quantity}} </span></p>
+                    <button type="button" class="add-to-cart" v-on:click="removeItemFromCart(course)">Remove</button>
                 </div>
-                <br>
-                <form @submit.prevent="completeOrder">
-                    <input 
-                        type="text" 
-                        name="name_" 
-                        id="name_" 
-                        v-model="name_" 
-                        placeholder="Name" 
-                        @input="validateName"
-                        :class="{invalid: !validName && name_}"
-                    />
-                    <input 
-                        type="tel" 
-                        name="phone" 
-                        id="phone" 
-                        v-model="phone" 
-                        placeholder="Phone Number" 
-                        @input="validatePhone"
-                        :class="{invalid: !validPhone && phone}"
-                    />
-                    <button 
-                        type="submit" 
-                        class="add-to-cart" 
-                        :class="{disabled: !validName || !validPhone}"
-                    >Checkout</button>
-                </form>
-                
             </div>
-
+            
+            <div class="total">
+                <button type="button" v-bind:class="{'disabled': cart.length === 0}" class="add-to-cart" @click="collectContactInfoOnCheckout()">Checkout</button>
+                Total: 
+                ${{totalPrice}}
+            </div> 
         </section>
         <footer>
             <p> © 2024 Lessons, All rights reserved</p>
