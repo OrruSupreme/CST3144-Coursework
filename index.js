@@ -91,6 +91,34 @@ app.post('/courses/', async (req, res) => {
 
 });
 
+
+/*setting up a put route to update course by id*/
+app.put('/courses/:id', async (req, res) => {
+    let course = {}
+    try {
+        const courses = database.collection("courses");
+        const filter = { _id: new ObjectId(req.params.id) };
+        console.log(req.params.id);
+        course = await courses.findOne(filter)
+        console.log(course)
+        const updateDoc = {
+            $set: {
+                id: req.body.id || course.id,
+                subject: req.body.subject || course.subject,
+                location: req.body.location || course.location,
+                price: req.body.price || course.price,
+                space: req.body.space || course.space
+            },
+        };
+        await courses.updateOne(filter, updateDoc);
+        course = await courses.findOne(filter)
+        console.log(result);
+    } catch (error) {
+        console.error(error.message);
+    }
+    return res.status(200).json(course);
+})
+
 //get by id
 app.get('/courses/:id', async (req, res) => {
     let course = {}
