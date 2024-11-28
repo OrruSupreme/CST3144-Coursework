@@ -55,3 +55,29 @@ app.get("/courses/", async (req, res) => {
     }
 });
 
+
+/*Create new course*/
+app.post('/courses/', async (req, res) => {
+    //try block to catch and handle errors
+    try {
+        //defined courses to represent the courses collection in my MongoDB database allowing me to insert data
+        const courses = database.collection("courses")
+        //defined data object to hold the data to be inserted into courses
+        const data = {
+            id: req.body.id,
+            subject: req.body.subject,
+            location: req.body.location,
+            price: req.body.price,
+            space: req.body.space
+        }
+        /* inserting the defined data into courses*/
+        const result = await courses.insertOne(data);
+        console.log(result);
+    }
+    /*if any error occurs in the try block the catch block will execute it*/
+    catch (error) {
+        console.error(error.message);
+    }
+    return res.send();
+
+});
