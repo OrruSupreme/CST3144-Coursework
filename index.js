@@ -10,6 +10,15 @@ var bodyParser = require('body-parser')
 app.use(express.static("doc"));
 app.use(bodyParser.json());
 
+//Request Logger Middleware
+const reqLogger = (req, res, next) => {
+    console.log(
+        `A ${req.method} request to the ${req.path} URL was made on ${new Date()}`
+    );
+    next()
+}
+app.use(reqLogger)
+
 
 app.listen(4000, function () {
     console.log('Server started at port 4000')
