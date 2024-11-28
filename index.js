@@ -14,3 +14,44 @@ app.use(bodyParser.json());
 app.listen(4000, function () {
     console.log('Server started at port 4000')
 })
+
+// Importing required module
+const { MongoClient } = require("mongodb");
+//mongodb URI used to connect to a Atlas cluster
+const databaseURL = "mongodb+srv://so956:4d3Icf30RSuc1MwB@cluster0.edg67.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const mongoClient = new MongoClient(databaseURL)
+//accessing the project1 database 
+const database = mongoClient.db("project1");
+
+
+// Establish a connection to the MongoDB server
+function connect() {
+    mongoClient.connect()
+    let database = mongoClient.db('project1')
+    return database
+}
+
+//Create a mongodb instance
+let mongoDatabase = connect();
+
+
+
+//Retrieve all courses
+app.get("/courses/", async (req, res) => {
+    try {
+        const courses = database.collection("courses")
+        const result = await courses.find({}).toArray()
+        const response = result.map((item) => {
+            return {
+                ...item,
+                id: item._id.toString()
+            }
+
+        })
+        res.json(response)
+    } catch (error) {
+        console.error(error.message);
+
+    }
+});
+
