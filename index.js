@@ -90,3 +90,16 @@ app.post('/courses/', async (req, res) => {
     return res.send();
 
 });
+
+//get by id
+app.get('/courses/:id', async (req, res) => {
+    let course = {}
+    try {
+        const courses = database.collection("courses");
+        const filter = { _id: new ObjectId(req.params.id) };
+        course = await courses.findOne(filter)
+    } catch (error) {
+        console.log(error)
+    }
+    return res.status(200).json(course);
+})
