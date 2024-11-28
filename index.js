@@ -5,9 +5,8 @@ const app = express();
 const path = require('path');
 var bodyParser = require('body-parser')
 
-
 //Middleware setup
-app.use(express.static("doc"));
+app.use(express.static("docs"));
 app.use(bodyParser.json());
 
 //Request Logger Middleware
@@ -44,7 +43,6 @@ function connect() {
 let mongoDatabase = connect();
 
 
-
 //Retrieve all courses
 app.get("/courses/", async (req, res) => {
     try {
@@ -63,7 +61,6 @@ app.get("/courses/", async (req, res) => {
 
     }
 });
-
 
 /*Create new course*/
 app.post('/courses/', async (req, res) => {
@@ -90,7 +87,6 @@ app.post('/courses/', async (req, res) => {
     return res.send();
 
 });
-
 
 /*setting up a put route to update course by id*/
 app.put('/courses/:id', async (req, res) => {
@@ -119,6 +115,7 @@ app.put('/courses/:id', async (req, res) => {
     return res.status(200).json(course);
 })
 
+
 //get by id
 app.get('/courses/:id', async (req, res) => {
     let course = {}
@@ -131,3 +128,76 @@ app.get('/courses/:id', async (req, res) => {
     }
     return res.status(200).json(course);
 })
+
+//search route
+app.get('/search/', async (req, res) => {
+    const courses = await database.collection("courses").find({
+        subject: { $regex: `^${req.query.search_term}`, $options: "i" }
+    }).toArray();
+    const result = courses.map((item) => {
+        return { ...item, id: item._id.toString() }
+    })
+    return res.json(result);
+})
+
+
+//deleteby id
+app.delete('/courses/:id', async (req, res) => {
+    try {
+        const courses = database.collection("courses");
+        const filter = { _id: new ObjectId(req.params.id) };
+        await courses.deleteOne(filter)
+    } catch (error) {
+        console.log(error)
+    }
+    return res.status(204).send()
+})
+
+app.post('/order/', async (req, res) => {
+    if (req.body.hasOwnProperty('items') && req.body.items.length < 0 ) {
+        return res.status(400).json('You cannot checkout an empty cart')
+    }
+    const courses = database.collection("courses");
+    req.body.items.map(async (item) => {
+        try {
+            const filter = { _id: new ObjectId(item.id) };
+
+            let course = await courses.findOne(filter)
+
+            if (item.quantity > course.space) {
+                return res.status(400).json(`Can't fulfill order as quantity specified for ${course.subject} beyond available stock!`);
+            }
+
+        }
+        /*if any error occurs in the try block the catch block will execute it*/
+        catch (error) {
+            //log error message on the console
+            console.error(error.message);
+            return res.status(400).json('Error occured whilte trying to fulfill order!')
+        }
+    })
+
+    const order = database.collection("order")
+
+    result = await order.insertOne(req.body);
+    try {
+        req.body.items.map(async (item) => {
+            const filter = { _id: new ObjectId(item.id) };
+            let course = await courses.findOne(filter)
+            const updateDoc = {
+                $set: {
+                    space: course.space > 0 ? course.space - item.quantity : 0
+                },
+            };
+            await courses.updateOne(filter, updateDoc);
+        });
+
+
+    } catch (error) {
+        console.error(error.message);
+    }
+
+    return res.json("Order completed succesfully");
+
+});
+
