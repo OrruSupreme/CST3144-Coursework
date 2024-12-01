@@ -1,4 +1,5 @@
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
     <div id="app" class="container">
         <!-- Header -->
@@ -16,20 +18,24 @@
                 <div class="">
                     <a href="index.html">Home <i class='bx bx-home-alt'></i></i></a>
                 </div>
-                
+
                 <div class="">
                     <div id="search-form">
                         <input type="text" @input="search" v-model="search_term">
-                       
+
                     </div>
                 </div>
 
                 <div class="">
-                    <a href="cart.html" v-bind:class="{cartbutton:isCartEmpty}" >Cart <i class='bx bxs-shopping-bag'></i></a> 
+                 
+                    <a href="cart.html" :class="{ disabledCart: isCartEmpty }" :aria-disabled="isCartEmpty"
+                        :tabindex="isCartEmpty ? -1 : 0" @click="isCartEmpty && $event.preventDefault()">
+                        Cart <i class='bx bxs-shopping-bag'></i>
+                    </a>
                 </div>
-                  
+
             </div>
-                
+
         </header>
 
         <section class="products container">
@@ -51,24 +57,20 @@
             </div>
             <div class="List">
                 <div v-for="course in sortedCourses" :key="course.id" class="product">
-                    <img :src= "course.img">
+                    <img :src="'renderURL'+course.toLowerCase().replace(" ", " -")+'.jpg'">
                     <h3> {{course.topic}} </h3>
                     <p>Location: <span> {{course.location}} </span></p>
                     <p>Price: <span> {{course.price}} </span></p>
                     <p>Space: <span> {{course.space}} </span></p>
-                    <button 
-                        v-bind:class="{'disabled': course.space === 0}" 
-                        type="button" 
-                        class="add-to-cart" 
-                        v-on:click="addToCart(course)" 
-                    >
+                    <button v-bind:class="{'disabled': course.space === 0}" type="button" class="add-to-cart"
+                        v-on:click="addToCart(course)">
                         Add to Cart
                     </button>
                 </div>
             </div>
-            
 
-            
+
+
         </section>
 
         <footer>
@@ -76,7 +78,8 @@
         </footer>
 
     </div>
-    
+
     <script src="assets/js/app.js"></script>
 </body>
+
 </html>

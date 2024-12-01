@@ -13,13 +13,19 @@ new Vue({
         isCartEmpty: false
     },
     created() {
-        const storedCart = localStorage.getItem('cart') || [];
-        if (storedCart) {
-            this.cart = JSON.parse(storedCart);       
-        }
+        const storedCart = localStorage.getItem('cart');
+        this.cart = storedCart ? JSON.parse(storedCart) : [];
+        this.isCartEmpty = this.cart.length === 0;
         this.updateCourseSpace();
-        const emptyCart = JSON.parse(storedCart)
-        this.isCartEmpty= emptyCart.length === 0;
+    },
+    watch: {
+        cart: {
+            handler(newValue) {
+                this.isCartEmpty = newValue.length === 0;
+                localStorage.setItem('cart', JSON.stringify(newValue));
+            },
+            deep: true,
+        },
     },
     computed: {
         sortedCourses() {
