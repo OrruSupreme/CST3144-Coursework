@@ -88,7 +88,7 @@ new Vue({
             })
             console.log(payload)
 
-            fetch('https://cst3144-cw-backend-k0iq.onrender.com/order/', {
+            fetch('https://cst3144-cw-backend-1-38l1.onrender.com/order/', {
                 method: 'post', headers: {
                     'Content-Type': 'application/json',
                 }, body: payload
@@ -147,7 +147,7 @@ new Vue({
         },
         search() {
             if (this.search_term.length > 0 && this.search_term.trim()!== '' ) {
-                fetch(`https://cst3144-cw-backend-k0iq.onrender.com/search?search_term=${this.search_term}`)
+                fetch(`https://cst3144-cw-backend-1-38l1.onrender.com/search?search_term=${this.search_term}`)
                 .then(res => res.json())
                 .then((data) => this.courses = data)
                 .catch(err => { console.log(err) })
@@ -157,7 +157,7 @@ new Vue({
 
     },
     mounted() {
-        fetch('https://cst3144-cw-backend-k0iq.onrender.com/lessons')
+        fetch('https://cst3144-cw-backend-1-38l1.onrender.com/lessons')
             .then(res => res.json())
             .then((data) => 
                 {
