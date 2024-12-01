@@ -11,13 +11,6 @@
     text-decoration: none;
 }
 
-img{
-    float: right;
-    height: 120px;
-    width: 120px;
-    border-radius: 5px;
-}
-
 
 :root{
     --main-color: #fd4646;
@@ -26,6 +19,13 @@ img{
 
 }
 
+
+img{
+    float: right;
+    height: 120px;
+    width: 120px;
+    border-radius: 5px;
+}
 
 
 
