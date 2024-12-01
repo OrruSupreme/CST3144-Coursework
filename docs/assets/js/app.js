@@ -12,6 +12,7 @@ new Vue({
         search_term: '',
         isCartEmpty: false
     },
+
     created() {
         const storedCart = localStorage.getItem('cart');
         this.cart = storedCart ? JSON.parse(storedCart) : [];
