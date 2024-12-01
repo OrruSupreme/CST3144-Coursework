@@ -20,7 +20,11 @@
 
 img{
     float: right;
+    height: 120px;
+    width: 120px;
+    border-radius: 5px;
 }
+
 
 
 
