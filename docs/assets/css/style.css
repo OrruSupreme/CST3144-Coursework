@@ -20,15 +20,6 @@
 }
 
 
-img{
-    float: right;
-    height: 120px;
-    width: 120px;
-    border-radius: 5px;
-}
-
-
-
 body{
     color: var(--text-color);
 }
@@ -102,6 +93,13 @@ section{
 
 .product h3{
     color: #3949ab;
+}
+
+.lessonImg{
+    float: right;
+    height: 120px;
+    width: 120px;
+    border-radius: 5px;
 }
 
 footer{
