@@ -9,18 +9,20 @@ new Vue({
         phone: '',
         validName: false,
         validPhone: false,
-        search_term: ''
+        search_term: '',
+        isCartEmpty: false
     },
     created() {
         const storedCart = localStorage.getItem('cart') || [];
         if (storedCart) {
-            this.cart = JSON.parse(storedCart);
+            this.cart = JSON.parse(storedCart);       
         }
         this.updateCourseSpace();
+        const emptyCart = JSON.parse(storedCart)
+        this.isCartEmpty= emptyCart.length === 0;
     },
     computed: {
         sortedCourses() {
-            // console.log(this.courses)
             let sorted = [...this.courses];
 
             sorted.sort((a, b) => {
@@ -148,7 +150,7 @@ new Vue({
 
     },
     mounted() {
-        fetch('/courses')
+        fetch('https://cst3144-cw-backend-k0iq.onrender.com/lessons')
             .then(res => res.json())
             .then((data) => 
                 {

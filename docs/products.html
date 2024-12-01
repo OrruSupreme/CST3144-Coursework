@@ -25,7 +25,7 @@
                 </div>
 
                 <div class="">
-                    <a href="cart.html">Cart <i class='bx bxs-shopping-bag'></i></a> 
+                    <a href="cart.html" v-bind:class="{cartbutton:isCartEmpty}" >Cart <i class='bx bxs-shopping-bag'></i></a> 
                 </div>
                   
             </div>
@@ -78,5 +78,9 @@
     </div>
     
     <script src="assets/js/app.js"></script>
+    <script>
+       console.log(this.isCartEmpty)
+
+    </script>
 </body>
 </html>
