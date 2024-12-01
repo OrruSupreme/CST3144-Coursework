@@ -11,18 +11,19 @@
     text-decoration: none;
 }
 
-:root{
-    --main-color: #fd4646;
-    --text-color: #171417;
-    --bg-color: #fff;
-
-}
-
 img{
     float: right;
     height: 120px;
     width: 120px;
     border-radius: 5px;
+}
+
+
+:root{
+    --main-color: #fd4646;
+    --text-color: #171417;
+    --bg-color: #fff;
+
 }
 
 
