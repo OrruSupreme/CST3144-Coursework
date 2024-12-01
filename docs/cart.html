@@ -33,7 +33,7 @@
                 <h2 class="section-title"> Your Cart </h2>
                 <div v-for="course in cart" :key="course.id" class="product">
                     <img :src= "course.img">
-                   <h3> {{course.subject}} </h3>
+                   <h3> {{course.topic}} </h3>
                   
                    <p>Location: <span> {{course.location}} </span></p>
                    <p>Price: <span> $ {{course.price}} </span></p>
