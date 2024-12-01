@@ -57,7 +57,7 @@
             </div>
             <div class="List">
                 <div v-for="course in sortedCourses" :key="course.id" class="product">
-                    <img v-bind:src="'https://cst3144-cw-backend-k0iq.onrender.com'+course.toLowerCase().replace(" ", " -")+'.jpg'">
+                    <img v-bind:src="'https://cst3144-cw-backend-k0iq.onrender.com/images'+course.toLowerCase().replace(' ', '-')+'.jpg'">
                     <h3> {{course.topic}} </h3>
                     <p>Location: <span> {{course.location}} </span></p>
                     <p>Price: <span> {{course.price}} </span></p>
